@@ -1,0 +1,29 @@
+﻿@model IEnumerable<DAL.Models.Category>
+
+@{
+    Layout = "~/Views/_Layout.cshtml";
+    ViewData["Title"] = "Menu";
+}
+
+<section class="menu-hero">
+    <h1>Our <span>Menu</span></h1>
+    <p>Explore our selection of drinks, pastries & more</p>
+</section>
+
+<section class="menu-section">
+    <div class="menu-container">
+        <div class="category-grid">
+            @foreach (var category in Model)
+            {
+                <a href="/Menu/Subcategories/@category.Id" class="category-card">
+                    <div class="category-img">
+                        <img src="~/images/@category.ImageUrl" alt="@category.Name" />
+                    </div>
+                    <div class="category-info">
+                        <h3>@category.Name</h3>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</section>

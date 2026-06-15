@@ -1,0 +1,65 @@
+﻿@model DAL.Models.Subcategory
+
+@{
+    Layout = "~/Views/_Layout.cshtml";
+    ViewData["Title"] = @Model.Name;
+}
+
+<section class="menu-hero">
+    <h1>@Model.Name</h1>
+    <p>Pick your order</p>
+</section>
+
+<section class="menu-section">
+    <div class="menu-container">
+
+        <a href="/Menu/Subcategories/@Model.CategoryId" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search products..."
+                   onkeyup="searchProducts()" />
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            @foreach (var product in ViewBag.Products)
+            {
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="~/images/@product.ImageUrl" alt="@product.Name" />
+                        @if (product.IsFeatured)
+                        {
+                            <span class="badge">Featured</span>
+                        }
+                    </div>
+                    <div class="product-info">
+                        <h3>@product.Name</h3>
+                        <p>@product.Description</p>
+                        <div class="product-footer">
+                            <span class="price">@product.Price SAR</span>
+                            <a href="/Cart/Add/@product.Id" class="btn-add">
+                                <i class="fas fa-plus"></i> Add
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function searchProducts() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                const name = card.querySelector('h3').textContent.toLowerCase();
+                card.style.display = name.includes(input) ? 'block' : 'none';
+            });
+        }
+    </script>
+}

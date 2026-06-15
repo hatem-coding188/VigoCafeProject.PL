@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "~/Views/_Layout.cshtml";
+    ViewData["Title"] = "Add Category";
+}
+
+<section class="admin-section">
+    <div class="admin-container">
+
+        <div class="admin-header">
+            <h2 class="admin-title">Add <span>Category</span></h2>
+            <a href="/Admin/Categories" class="btn-back">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+
+        <div class="admin-form-card">
+            <form method="post" action="/Admin/AddCategory">
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label>Category Name</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-list"></i>
+                        <input type="text" name="Name" placeholder="Enter category name" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-image"></i>
+                        <input type="text" name="ImageUrl" placeholder="Enter image path" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="IsActive" value="true" checked /> Active
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-auth">Add Category</button>
+            </form>
+        </div>
+
+    </div>
+</section>

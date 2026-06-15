@@ -1,0 +1,47 @@
+﻿@model IEnumerable<DAL.Models.Category>
+
+@{
+    Layout = "~/Views/_Layout.cshtml";
+    ViewData["Title"] = "Categories";
+}
+
+<section class="admin-section">
+    <div class="admin-container">
+
+        <div class="admin-header">
+            <h2 class="admin-title">Categories</h2>
+            <a href="/Admin/AddCategory" class="btn-primary">+ Add Category</a>
+        </div>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cat in Model)
+                {
+                    <tr>
+                        <td>@cat.Id</td>
+                        <td>@cat.Name</td>
+                        <td>
+                            <span class="@(cat.IsActive ? "badge-active" : "badge-inactive")">
+                                @(cat.IsActive ? "Active" : "Inactive")
+                            </span>
+                        </td>
+                        <td>
+                            <a href="/Admin/EditCategory/@cat.Id" class="btn-edit">Edit</a>
+                            <a href="/Admin/DeleteCategory/@cat.Id" class="btn-delete"
+                               onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</section>

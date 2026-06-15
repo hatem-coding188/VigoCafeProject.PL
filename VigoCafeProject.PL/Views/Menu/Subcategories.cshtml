@@ -1,0 +1,32 @@
+﻿@model DAL.Models.Category
+
+@{
+    Layout = "~/Views/_Layout.cshtml";
+    ViewData["Title"] = @Model.Name;
+}
+
+<section class="menu-hero">
+    <h1>@Model.Name</h1>
+    <p>Choose your favorite subcategory</p>
+</section>
+
+<section class="menu-section">
+    <div class="menu-container">
+        <a href="/Menu" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back to Menu
+        </a>
+        <div class="category-grid">
+            @foreach (var sub in Model.Subcategories)
+            {
+                <a href="/Menu/Products/@sub.Id" class="category-card">
+                    <div class="category-img">
+                        <img src="~/images/@sub.ImageUrl" alt="@sub.Name" />
+                    </div>
+                    <div class="category-info">
+                        <h3>@sub.Name</h3>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</section>

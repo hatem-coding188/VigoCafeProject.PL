@@ -1,0 +1,47 @@
+﻿@model IEnumerable<DAL.Models.Product>
+
+@{
+    Layout = "~/Views/_Layout.cshtml";
+    ViewData["Title"] = "Products";
+}
+
+<section class="admin-section">
+    <div class="admin-container">
+
+        <div class="admin-header">
+            <h2 class="admin-title">Products</h2>
+            <a href="/Admin/AddProduct" class="btn-primary">+ Add Product</a>
+        </div>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Featured</th>
+                    <th>Available</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    <tr>
+                        <td>@p.Id</td>
+                        <td>@p.Name</td>
+                        <td>@p.Price SAR</td>
+                        <td>@(p.IsFeatured ? "✅" : "❌")</td>
+                        <td>@(p.IsAvailable ? "✅" : "❌")</td>
+                        <td>
+                            <a href="/Admin/EditProduct/@p.Id" class="btn-edit">Edit</a>
+                            <a href="/Admin/DeleteProduct/@p.Id" class="btn-delete"
+                               onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</section>

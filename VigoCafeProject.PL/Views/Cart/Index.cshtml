@@ -1,0 +1,93 @@
+﻿@model DAL.Models.Cart
+
+@{
+    Layout = "~/Views/_Layout.cshtml";
+    ViewData["Title"] = "Cart";
+}
+
+<section class="cart-section">
+    <div class="cart-container">
+
+        <h2 class="cart-title">Your <span>Cart</span></h2>
+
+        @if (Model == null || !Model.CartItems.Any())
+        {
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Your cart is empty</h3>
+                <p>Looks like you haven't added anything yet.</p>
+                <a href="/Menu" class="btn-primary">Browse Menu</a>
+            </div>
+        }
+        else
+        {
+            <div class="cart-content">
+
+                <div class="cart-items">
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <div class="cart-item" id="item-@item.CartId">
+                            <div class="cart-item-img">
+                                <img src="~/images/@item.Product.ImageUrl"
+                                     alt="@item.Product.Name" />
+                            </div>
+                            <div class="cart-item-info">
+                                <h3>@item.Product.Name</h3>
+                                <p class="item-price">@item.UnitPrice SAR</p>
+                            </div>
+                            <div class="cart-item-qty">
+                                <a href="/Cart/Decrease/@item.CartId/@item.ProductId"
+                                   class="qty-btn">
+                                    <i class="fas fa-minus"></i>
+                                </a>
+                                <span class="qty-value">@item.Quantity</span>
+                                <a href="/Cart/Increase/@item.CartId/@item.ProductId"
+                                   class="qty-btn">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            </div>
+                            <div class="cart-item-total">
+                                @(item.UnitPrice* item.Quantity) SAR
+                            </div>
+                            <a href="/Cart/Remove/@item.CartId/@item.ProductId"
+                               class="cart-remove">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    }
+                </div>
+
+                <div class="cart-summary">
+                    <h3 class="summary-title">Order Summary</h3>
+
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>@Model.CartItems.Sum(i => i.UnitPrice * i.Quantity) SAR</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Delivery</span>
+                        <span class="free">Free</span>
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span>@Model.CartItems.Sum(i => i.UnitPrice * i.Quantity) SAR</span>
+                    </div>
+
+                    <a href="/Cart/Checkout" class="btn-auth">
+                        Proceed to Checkout
+                    </a>
+
+                    <a href="/Menu" class="btn-continue">
+                        <i class="fas fa-arrow-left"></i> Continue Shopping
+                    </a>
+                </div>
+
+            </div>
+        }
+
+    </div>
+</section>
