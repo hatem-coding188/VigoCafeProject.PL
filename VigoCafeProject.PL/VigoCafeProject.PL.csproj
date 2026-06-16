@@ -14,9 +14,9 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\VigoCafeProject.BLL\VigoCafeProject.BLL.csproj" />
-    <ProjectReference Include="..\VigoCafeProject.DAL\VigoCafeProject.DAL.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\VigoCafeProject.BLL\VigoCafeProject.BLL.csproj" />
+		<ProjectReference Include="..\VigoCafeProject.DAL\VigoCafeProject.DAL.csproj" />
+	</ItemGroup>
 
 </Project>
