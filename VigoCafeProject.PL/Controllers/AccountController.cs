@@ -29,6 +29,7 @@ namespace PL.Controllers
 
             HttpContext.Session.SetInt32("CustomerId", customer.Id);
             HttpContext.Session.SetString("CustomerName", customer.FullName);
+            HttpContext.Session.SetString("UserRole", customer.Role); // ← الجديد
             return RedirectToAction("Index", "Home");
         }
 

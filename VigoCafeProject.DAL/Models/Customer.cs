@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace DAL.Models
 {
     public class Customer
@@ -23,6 +22,8 @@ namespace DAL.Models
         public string PhoneNumber { get; set; }
 
         public string Address { get; set; }
+
+        public string Role { get; set; } = "Customer";  // ← الجديد
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
