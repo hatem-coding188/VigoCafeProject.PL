@@ -27,6 +27,12 @@ namespace BLL.Repositories
             => _context.Products
                        .Where(p => p.IsFeatured && p.IsAvailable)
                        .ToList();
+        public IEnumerable<Product> GetLatest()
+            => _context.Products
+                       .Where(p => p.IsAvailable)
+                       .OrderByDescending(p => p.Id)
+                       .Take(4)
+                       .ToList();
 
         public IEnumerable<Product> Search(string keyword)
             => _context.Products

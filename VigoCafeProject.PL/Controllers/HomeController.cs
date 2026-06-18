@@ -17,7 +17,7 @@ namespace PL.Controllers
         public IActionResult Index()
         {
             ViewBag.FeaturedProducts = _productService.GetFeatured();
-            ViewBag.Categories = _categoryService.GetAll();
+            ViewBag.LatestProducts = _productService.GetLatest();
             return View();
         }
     }

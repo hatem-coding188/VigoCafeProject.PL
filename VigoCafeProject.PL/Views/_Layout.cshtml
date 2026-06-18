@@ -36,7 +36,7 @@
                     <li>
                        @if (HttpContextAccessor.HttpContext.Session.GetString("UserRole") == "Admin")
                             {
-                                <a class="nav-link" asp-controller="Admin" asp-action="Index">Admin</a>
+                            <a href="/Admin">Admin</a>
                             }
                     </li>
                 </ul>

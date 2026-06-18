@@ -31,7 +31,12 @@
                         <td>@p.Id</td>
                         <td>@p.Name</td>
                         <td>@p.Price SAR</td>
-                        <td>@(p.IsFeatured ? "✅" : "❌")</td>
+                        <td>
+                            <a href="/Admin/ToggleFeatured/@p.Id"
+                               class="@(p.IsFeatured ? "btn-delete" : "btn-edit")">
+                                @(p.IsFeatured ? "⭐ Unfeature" : "☆ Feature")
+                            </a>
+                        </td>
                         <td>@(p.IsAvailable ? "✅" : "❌")</td>
                         <td>
                             <a href="/Admin/EditProduct/@p.Id" class="btn-edit">Edit</a>

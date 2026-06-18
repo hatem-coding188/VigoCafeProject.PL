@@ -90,6 +90,18 @@ namespace PL.Controllers
             return RedirectToAction("Products");
         }
 
+        // Featured
+        public IActionResult ToggleFeatured(int id)
+        {
+            var product = _productService.GetById(id);
+            if (product != null)
+            {
+                product.IsFeatured = !product.IsFeatured;
+                _productService.Update(product);
+            }
+            return RedirectToAction("Products");
+        }
+
         // Orders
         public IActionResult Orders() => View(_orderService.GetAll());
 

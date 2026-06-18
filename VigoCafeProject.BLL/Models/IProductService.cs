@@ -8,6 +8,7 @@ namespace BLL.Interfaces
         IEnumerable<Product> GetAll();
         IEnumerable<Product> GetBySubcategoryId(int subId);
         IEnumerable<Product> GetFeatured();
+        IEnumerable<Product> GetLatest();
         IEnumerable<Product> Search(string keyword);
         Product GetById(int id);
         void Add(Product product);
