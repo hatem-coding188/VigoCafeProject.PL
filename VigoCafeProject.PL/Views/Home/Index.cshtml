@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = "~/Views/_Layout.cshtml";
     ViewData["Title"] = "Home";
 }
@@ -21,7 +22,7 @@
 <section class="featured-section">
     <div class="features-container">
         <div class="section-header" style="grid-column: 1 / -1;">
-            <h2>⭐️ <span>Featured</span></h2>
+            <h2> <span>Featured</span></h2>
             <p>Hand-picked favorites just for you</p>
         </div>
         @foreach (var product in (IEnumerable<Product>)ViewBag.FeaturedProducts)
@@ -41,7 +42,7 @@
 <section class="featured-section" style="background-color:#1a1a1a;">
     <div class="features-container">
         <div class="section-header" style="grid-column: 1 / -1;">
-            <h2>🆕 <span>Latest</span></h2>
+            <h2><span>Latest</span></h2>
             <p>Fresh additions to our menu</p>
         </div>
         @foreach (var product in (IEnumerable<Product>)ViewBag.LatestProducts)

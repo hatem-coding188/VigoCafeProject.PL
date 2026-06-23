@@ -25,6 +25,7 @@ namespace PL.Controllers
         public IActionResult Index()
         {
             ViewBag.Categories = _categoryService.GetAll().Count();
+            ViewBag.Subcategory = _subcategoryService.GetAll().Count();
             ViewBag.Products = _productService.GetAll().Count();
             ViewBag.Orders = _orderService.GetAll().Count();
             return View();
@@ -109,6 +110,41 @@ namespace PL.Controllers
         {
             _orderService.UpdateStatus(id, status);
             return RedirectToAction("Orders");
+        }
+        // Subcategories
+        public IActionResult Subcategories()
+            => View(_subcategoryService.GetAllWithCategory()); // ← غير GetAll
+
+        public IActionResult AddSubcategory()
+        {
+            ViewBag.Categories = _categoryService.GetAll();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddSubcategory(Subcategory subcategory)
+        {
+            _subcategoryService.Add(subcategory);
+            return RedirectToAction("Subcategories");
+        }
+
+        public IActionResult EditSubcategory(int id)
+        {
+            ViewBag.Categories = _categoryService.GetAll();
+            return View(_subcategoryService.GetById(id));
+        }
+
+        [HttpPost]
+        public IActionResult EditSubcategory(Subcategory subcategory)
+        {
+            _subcategoryService.Update(subcategory);
+            return RedirectToAction("Subcategories");
+        }
+
+        public IActionResult DeleteSubcategory(int id)
+        {
+            _subcategoryService.Delete(id);
+            return RedirectToAction("Subcategories");
         }
     }
 }

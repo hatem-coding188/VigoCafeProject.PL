@@ -1,16 +1,16 @@
-﻿@model IEnumerable<DAL.Models.Category>
+﻿@model IEnumerable<DAL.Models.Subcategory>
 
 @{
     Layout = "~/Views/_Layout.cshtml";
-    ViewData["Title"] = "Categories";
+    ViewData["Title"] = "Subcategories";
 }
 
 <section class="admin-section">
     <div class="admin-container">
 
         <div class="admin-header">
-            <h2 class="admin-title">Categories</h2>
-            <a href="/Admin/AddCategory" class="btn-primary">+ Add Category</a>
+            <h2 class="admin-title">Subcategories</h2>
+            <a href="/Admin/AddSubcategory" class="btn-primary">+ Add Subcategory</a>
         </div>
 
         <table class="admin-table">
@@ -18,24 +18,26 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
+                    <th>Category</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var cat in Model)
+                @foreach (var sub in Model)
                 {
                     <tr>
-                        <td>@cat.Id</td>
-                        <td>@cat.Name</td>
+                        <td>@sub.Id</td>
+                        <td>@sub.Name</td>
+                        <td>@sub.Category.Name</td>
                         <td>
-                            <span class="@(cat.IsActive ? "badge-active" : "badge-inactive")">
-                                @(cat.IsActive ? "Active" : "Inactive")
+                            <span class="@(sub.IsActive ? "badge-active" : "badge-inactive")">
+                                @(sub.IsActive ? "Active" : "Inactive")
                             </span>
                         </td>
                         <td>
-                            <a href="/Admin/EditCategory/@cat.Id" class="btn-primary">Edit</a>
-                            <a href="/Admin/DeleteCategory/@cat.Id" class="btn-primary"
+                            <a href="/Admin/EditSubcategory/@sub.Id" class="btn-primary">Edit</a>
+                            <a href="/Admin/DeleteSubcategory/@sub.Id" class="btn-primary"
                                onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
                     </tr>

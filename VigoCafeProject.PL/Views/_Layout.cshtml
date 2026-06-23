@@ -30,7 +30,13 @@
                 <ul class="nav-links" id="navLinks">
                     <li><a href="/Home">Home</a></li>
                     <li><a href="/Menu">Menu</a></li>
-                    <li><a href="/Cart"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+
+                    <li>
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("UserRole") != "Admin")
+                        {
+                            <a href="/Cart"><i class="fas fa-shopping-cart"></i> Cart</a>
+                        }
+                    </li>
                     <li><a href="/Account/Login">Login</a></li>
                     <li><a href="/Account/Register">Register</a></li>
                     <li>

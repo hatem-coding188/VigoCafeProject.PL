@@ -19,6 +19,12 @@ namespace BLL.Repositories
         public IEnumerable<Subcategory> GetAll()
             => _context.Subcategories.Where(s => s.IsActive).ToList();
 
+        public IEnumerable<Subcategory> GetAllWithCategory()
+            => _context.Subcategories
+                       .Include(s => s.Category)
+                       .Where(s => s.IsActive)
+                       .ToList();
+
         public IEnumerable<Subcategory> GetByCategoryId(int categoryId)
             => _context.Subcategories
                        .Where(s => s.CategoryId == categoryId && s.IsActive)

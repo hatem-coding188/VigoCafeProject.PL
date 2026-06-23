@@ -6,6 +6,7 @@ namespace BLL.Interfaces
     public interface ISubcategoryService
     {
         IEnumerable<Subcategory> GetAll();
+        IEnumerable<Subcategory> GetAllWithCategory(); // ← الجديدة
         IEnumerable<Subcategory> GetByCategoryId(int categoryId);
         Subcategory GetById(int id);
         Subcategory GetByIdWithProducts(int id);
