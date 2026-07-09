@@ -1,6 +1,9 @@
 ﻿using BLL.Interfaces;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System;
 
 namespace PL.Controllers
 {
@@ -22,6 +25,22 @@ namespace PL.Controllers
             _orderService = orderService;
         }
 
+        // Helper
+        private string SaveImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0) return null;
+
+            var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+
+            return "/images/" + fileName;
+        }
+
         public IActionResult Index()
         {
             ViewBag.Categories = _categoryService.GetAll().Count();
@@ -36,8 +55,9 @@ namespace PL.Controllers
         public IActionResult AddCategory() => View();
 
         [HttpPost]
-        public IActionResult AddCategory(Category category)
+        public IActionResult AddCategory(Category category, IFormFile ImageFile)
         {
+            category.ImageUrl = SaveImage(ImageFile);
             _categoryService.Add(category);
             return RedirectToAction("Categories");
         }
@@ -45,8 +65,10 @@ namespace PL.Controllers
         public IActionResult EditCategory(int id) => View(_categoryService.GetById(id));
 
         [HttpPost]
-        public IActionResult EditCategory(Category category)
+        public IActionResult EditCategory(Category category, IFormFile ImageFile)
         {
+            if (ImageFile != null)
+                category.ImageUrl = SaveImage(ImageFile);
             _categoryService.Update(category);
             return RedirectToAction("Categories");
         }
@@ -57,8 +79,48 @@ namespace PL.Controllers
             return RedirectToAction("Categories");
         }
 
+        // Subcategories
+        public IActionResult Subcategories()
+            => View(_subcategoryService.GetAllWithCategory());
+
+        public IActionResult AddSubcategory()
+        {
+            ViewBag.Categories = _categoryService.GetAll();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddSubcategory(Subcategory subcategory, IFormFile ImageFile)
+        {
+            subcategory.ImageUrl = SaveImage(ImageFile);
+            _subcategoryService.Add(subcategory);
+            return RedirectToAction("Subcategories");
+        }
+
+        public IActionResult EditSubcategory(int id)
+        {
+            ViewBag.Categories = _categoryService.GetAll();
+            return View(_subcategoryService.GetById(id));
+        }
+
+        [HttpPost]
+        public IActionResult EditSubcategory(Subcategory subcategory, IFormFile ImageFile)
+        {
+            if (ImageFile != null)
+                subcategory.ImageUrl = SaveImage(ImageFile);
+            _subcategoryService.Update(subcategory);
+            return RedirectToAction("Subcategories");
+        }
+
+        public IActionResult DeleteSubcategory(int id)
+        {
+            _subcategoryService.Delete(id);
+            return RedirectToAction("Subcategories");
+        }
+
         // Products
         public IActionResult Products() => View(_productService.GetAll());
+
         public IActionResult AddProduct()
         {
             ViewBag.Subcategories = _subcategoryService.GetAll();
@@ -66,8 +128,9 @@ namespace PL.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProduct(Product product)
+        public IActionResult AddProduct(Product product, IFormFile ImageFile)
         {
+            product.ImageUrl = SaveImage(ImageFile);
             _productService.Add(product);
             return RedirectToAction("Products");
         }
@@ -79,8 +142,10 @@ namespace PL.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProduct(Product product)
+        public IActionResult EditProduct(Product product, IFormFile ImageFile)
         {
+            if (ImageFile != null)
+                product.ImageUrl = SaveImage(ImageFile);
             _productService.Update(product);
             return RedirectToAction("Products");
         }
@@ -110,41 +175,6 @@ namespace PL.Controllers
         {
             _orderService.UpdateStatus(id, status);
             return RedirectToAction("Orders");
-        }
-        // Subcategories
-        public IActionResult Subcategories()
-            => View(_subcategoryService.GetAllWithCategory()); // ← غير GetAll
-
-        public IActionResult AddSubcategory()
-        {
-            ViewBag.Categories = _categoryService.GetAll();
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult AddSubcategory(Subcategory subcategory)
-        {
-            _subcategoryService.Add(subcategory);
-            return RedirectToAction("Subcategories");
-        }
-
-        public IActionResult EditSubcategory(int id)
-        {
-            ViewBag.Categories = _categoryService.GetAll();
-            return View(_subcategoryService.GetById(id));
-        }
-
-        [HttpPost]
-        public IActionResult EditSubcategory(Subcategory subcategory)
-        {
-            _subcategoryService.Update(subcategory);
-            return RedirectToAction("Subcategories");
-        }
-
-        public IActionResult DeleteSubcategory(int id)
-        {
-            _subcategoryService.Delete(id);
-            return RedirectToAction("Subcategories");
         }
     }
 }

@@ -1,27 +1,33 @@
-﻿@{
+﻿@model DAL.Models.Product
+
+@{
     Layout = "~/Views/_Layout.cshtml";
-    ViewData["Title"] = "Add Product";
+    ViewData["Title"] = "Edit Product";
 }
 
 <section class="admin-section">
     <div class="admin-container">
 
         <div class="admin-header">
-            <h2 class="admin-title">Add <span>Product</span></h2>
+            <h2 class="admin-title">Edit <span>Product</span></h2>
             <a href="/Admin/Products" class="btn-back">
                 <i class="fas fa-arrow-left"></i> Back
             </a>
         </div>
 
         <div class="admin-form-card">
-            <form method="post" action="/Admin/AddProduct" enctype="multipart/form-data">
+            <form method="post" action="/Admin/EditProduct">
                 @Html.AntiForgeryToken()
+
+                <input type="hidden" name="Id" value="@Model.Id" />
 
                 <div class="form-group">
                     <label>Product Name</label>
                     <div class="input-wrapper">
                         <i class="fas fa-coffee"></i>
-                        <input type="text" name="Name" placeholder="Enter product name" required />
+                        <input type="text" name="Name"
+                               value="@Model.Name"
+                               placeholder="Enter product name" required />
                     </div>
                 </div>
 
@@ -29,23 +35,29 @@
                     <label>Description</label>
                     <div class="input-wrapper">
                         <i class="fas fa-align-left"></i>
-                        <input type="text" name="Description" placeholder="Enter description" />
+                        <input type="text" name="Description"
+                               value="@Model.Description"
+                               placeholder="Enter description" />
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Price</label>
+                    <label>Price (SAR)</label>
                     <div class="input-wrapper">
                         <i class="fas fa-tag"></i>
-                        <input type="number" name="Price" step="0.01" placeholder="0.00" required />
+                        <input type="number" name="Price" step="0.01"
+                               value="@Model.Price"
+                               placeholder="0.00" required />
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Image</label>
+                    <label>Image URL</label>
                     <div class="input-wrapper">
                         <i class="fas fa-image"></i>
-                        <input type="file" name="ImageFile" accept="image/*" />
+                        <input type="text" name="ImageUrl"
+                               value="@Model.ImageUrl"
+                               placeholder="Enter image path" />
                     </div>
                 </div>
 
@@ -56,18 +68,27 @@
                         <select name="SubcategoryId">
                             @foreach (var sub in ViewBag.Subcategories)
                             {
-                                <option value="@sub.Id">@sub.Name</option>
+                                <option value="@sub.Id"
+                                        @(sub.Id == Model.SubcategoryId ? "selected" : "")>
+                                    @sub.Name
+                                </option>
                             }
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group checkbox-group">
-                    <label><input type="checkbox" name="IsAvailable" value="true" checked /> Available</label>
-                    <label><input type="checkbox" name="IsFeatured" value="true" /> Featured</label>
+                    <label>
+                        <input type="checkbox" name="IsAvailable" value="true"
+                               @(Model.IsAvailable ? "checked" : "") /> Available
+                    </label>
+                    <label>
+                        <input type="checkbox" name="IsFeatured" value="true"
+                               @(Model.IsFeatured ? "checked" : "") /> Featured
+                    </label>
                 </div>
 
-                <button type="submit" class="btn-auth">Add Product</button>
+                <button type="submit" class="btn-auth">Save Changes</button>
             </form>
         </div>
 

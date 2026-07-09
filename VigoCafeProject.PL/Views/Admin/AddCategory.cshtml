@@ -14,7 +14,7 @@
         </div>
 
         <div class="admin-form-card">
-            <form method="post" action="/Admin/AddCategory">
+            <form method="post" action="/Admin/AddCategory" enctype="multipart/form-data">
                 @Html.AntiForgeryToken()
 
                 <div class="form-group">
@@ -26,10 +26,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Image URL</label>
+                    <label>Image</label>
                     <div class="input-wrapper">
                         <i class="fas fa-image"></i>
-                        <input type="text" name="ImageUrl" placeholder="Enter image path" />
+                        <input type="file" name="ImageFile" accept="image/*" />
                     </div>
                 </div>
 
