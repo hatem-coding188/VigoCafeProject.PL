@@ -33,14 +33,36 @@
                         <td>@p.Price SAR</td>
                         <td>
                             <a href="/Admin/ToggleFeatured/@p.Id"
-                               class="@(p.IsFeatured ? "btn-delete" : "btn-edit")">
-                                @(p.IsFeatured ? "⭐ Unfeature" : "☆ Feature")
+                               style="text-decoration:none;">
+                                @if (p.IsFeatured)
+                                {
+                                    <span style="background:#f39c12; color:#fff; padding:4px 12px;
+                                        border-radius:20px; font-size:0.85rem; font-weight:600;">
+                                        ⭐ Featured
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span style="background:#444; color:#aaa; padding:4px 12px;
+                                        border-radius:20px; font-size:0.85rem; font-weight:600;">
+                                        ☆ Feature
+                                    </span>
+                                }
                             </a>
                         </td>
-                        <td>@(p.IsAvailable ? "✅" : "❌")</td>
                         <td>
-                            <a href="/Admin/EditProduct/@p.Id" class="btn-outline">Edit</a>
-                            <a href="/Admin/DeleteProduct/@p.Id" class="btn-outline"
+                            @if (p.IsAvailable)
+                            {
+                                <span class="badge-active">Available</span>
+                            }
+                            else
+                            {
+                                <span class="badge-inactive">Unavailable</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="/Admin/EditProduct/@p.Id" class="btn-primary">Edit</a>
+                            <a href="/Admin/DeleteProduct/@p.Id" class="btn-primary"
                                onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
                     </tr>

@@ -18,6 +18,9 @@ namespace BLL.Repositories
         public IEnumerable<Product> GetAll()
             => _context.Products.Where(p => p.IsAvailable).ToList();
 
+        public IEnumerable<Product> GetAllForAdmin()
+            => _context.Products.ToList();
+
         public IEnumerable<Product> GetBySubcategoryId(int subId)
             => _context.Products
                        .Where(p => p.SubcategoryId == subId && p.IsAvailable)
@@ -27,6 +30,7 @@ namespace BLL.Repositories
             => _context.Products
                        .Where(p => p.IsFeatured && p.IsAvailable)
                        .ToList();
+
         public IEnumerable<Product> GetLatest()
             => _context.Products
                        .Where(p => p.IsAvailable)
@@ -56,12 +60,21 @@ namespace BLL.Repositories
 
         public void Delete(int id)
         {
+            // أولاً احذف CartItems المرتبطة
+            var cartItems = _context.CartItems.Where(ci => ci.ProductId == id).ToList();
+            if (cartItems.Any())
+            {
+                _context.CartItems.RemoveRange(cartItems);
+            }
+
+            // ثم احذف المنتج
             var product = GetById(id);
             if (product != null)
             {
                 _context.Products.Remove(product);
-                _context.SaveChanges();
             }
+
+            _context.SaveChanges();
         }
     }
 }
