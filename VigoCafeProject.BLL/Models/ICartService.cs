@@ -1,4 +1,5 @@
-﻿using DAL.Models;
+﻿using System.Collections.Generic;
+using DAL.Models;
 
 namespace BLL.Interfaces
 {
@@ -6,9 +7,9 @@ namespace BLL.Interfaces
     {
         Cart GetCartByCustomerId(int customerId);
         void AddToCart(int customerId, int productId, int quantity);
-        void RemoveFromCart(int cartItemId);
-        void IncreaseQuantity(int cartItemId);
-        void DecreaseQuantity(int cartItemId);
+        void RemoveFromCart(int cartId, int productId);
+        void IncreaseQuantity(int cartId, int productId);
+        void DecreaseQuantity(int cartId, int productId);
         void ClearCart(int customerId);
         decimal GetTotal(int customerId);
     }

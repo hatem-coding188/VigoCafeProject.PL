@@ -32,21 +32,24 @@ namespace PL.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Remove(int id)
+        [Route("Cart/Increase/{cartId}/{productId}")]
+        public IActionResult Increase(int cartId, int productId)
         {
-            _cartService.RemoveFromCart(id);
+            _cartService.IncreaseQuantity(cartId, productId);
             return RedirectToAction("Index");
         }
 
-        public IActionResult Increase(int id)
+        [Route("Cart/Decrease/{cartId}/{productId}")]
+        public IActionResult Decrease(int cartId, int productId)
         {
-            _cartService.IncreaseQuantity(id);
+            _cartService.DecreaseQuantity(cartId, productId);
             return RedirectToAction("Index");
         }
 
-        public IActionResult Decrease(int id)
+        [Route("Cart/Remove/{cartId}/{productId}")]
+        public IActionResult Remove(int cartId, int productId)
         {
-            _cartService.DecreaseQuantity(id);
+            _cartService.RemoveFromCart(cartId, productId);
             return RedirectToAction("Index");
         }
 

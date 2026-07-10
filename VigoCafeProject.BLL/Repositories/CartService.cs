@@ -47,9 +47,10 @@ namespace BLL.Repositories
             _context.SaveChanges();
         }
 
-        public void RemoveFromCart(int cartItemId)
+        public void RemoveFromCart(int cartId, int productId)
         {
-            var item = _context.CartItems.Find(cartItemId);
+            var item = _context.CartItems
+                               .FirstOrDefault(ci => ci.CartId == cartId && ci.ProductId == productId);
             if (item != null)
             {
                 _context.CartItems.Remove(item);
@@ -57,9 +58,10 @@ namespace BLL.Repositories
             }
         }
 
-        public void IncreaseQuantity(int cartItemId)
+        public void IncreaseQuantity(int cartId, int productId)
         {
-            var item = _context.CartItems.Find(cartItemId);
+            var item = _context.CartItems
+                               .FirstOrDefault(ci => ci.CartId == cartId && ci.ProductId == productId);
             if (item != null)
             {
                 item.Quantity++;
@@ -67,9 +69,10 @@ namespace BLL.Repositories
             }
         }
 
-        public void DecreaseQuantity(int cartItemId)
+        public void DecreaseQuantity(int cartId, int productId)
         {
-            var item = _context.CartItems.Find(cartItemId);
+            var item = _context.CartItems
+                               .FirstOrDefault(ci => ci.CartId == cartId && ci.ProductId == productId);
             if (item != null)
             {
                 if (item.Quantity > 1)

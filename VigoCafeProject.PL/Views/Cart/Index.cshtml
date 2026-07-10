@@ -26,9 +26,9 @@
                 <div class="cart-items">
                     @foreach (var item in Model.CartItems)
                     {
-                        <div class="cart-item" id="item-@item.CartId">
+                        <div class="cart-item">
                             <div class="cart-item-img">
-                                <img src="~/images/@item.Product.ImageUrl"
+                                <img src="@item.Product.ImageUrl"
                                      alt="@item.Product.Name" />
                             </div>
                             <div class="cart-item-info">
@@ -47,7 +47,7 @@
                                 </a>
                             </div>
                             <div class="cart-item-total">
-                                @(item.UnitPrice* item.Quantity) SAR
+                                @(item.UnitPrice * item.Quantity) SAR
                             </div>
                             <a href="/Cart/Remove/@item.CartId/@item.ProductId"
                                class="cart-remove">
